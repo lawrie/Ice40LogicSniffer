@@ -1,0 +1,56 @@
+## Onboard 25khz oscillator
+set_io bf_clock 60 
+set_io -pullup yes extResetn 49
+
+# USB UART
+set_io tx  62
+set_io rx  61
+
+set_io armLEDnn     52
+set_io triggerLEDnn 55
+set_io dataReady    56
+
+set_io extClockIn  21
+set_io extClockOut  22
+set_io extTriggerIn  25
+set_io extTriggerOut  26
+
+set_io indata[0] 34 
+set_io indata[1] 33
+set_io indata[2] 29
+set_io indata[3] 28
+
+set_io indata[4] 38
+set_io indata[5] 37
+set_io indata[6] 32
+set_io indata[7] 31
+
+set_io indata[8] 16
+set_io indata[9] 15
+set_io indata[10] 10
+set_io indata[11] 9
+
+set_io indata[12] 18
+set_io indata[13] 17
+set_io indata[14] 12
+set_io indata[15] 11
+
+set_io indata[16] 141
+set_io indata[17] 142
+set_io indata[18] 138
+set_io indata[19] 139
+
+set_io indata[20] 136
+set_io indata[21] 137
+set_io indata[22] 134
+set_io indata[23] 135
+
+set_io indata[24] 143
+set_io indata[25] 144
+set_io indata[26] 3
+set_io indata[27] 4
+
+set_io indata[28] 1
+set_io indata[29] 2
+set_io indata[30] 7
+set_io indata[31] 8

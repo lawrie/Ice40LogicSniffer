@@ -83,9 +83,9 @@ output triggerLEDnn;
 `endif
 
 
-parameter FREQ = 50000000;  // limited to 100M by onboard SRAM
+parameter FREQ = 25000000;  // limited to 100M by onboard SRAM
 parameter TRXSCALE = 28;  // 100M / 28 / 115200 = 31 (5bit)  --If serial communications are not working then try adjusting this number.
-parameter RATE = 460800;  // maximum & base rate
+parameter RATE = 115200;  // maximum & base rate
 
 wire busy;
 wire execute;
@@ -110,14 +110,13 @@ assign {config_data,opcode} = cmd;
 
 // Instantiate PLL...
 // pll_wrapper pll_wrapper ( .clkin(bf_clock), .clk0(clock));
-reg clock = 1'b0;
+reg clock = bf_clock;
 
-always @(posedge bf_clock)
-  clock = ~clock;
-
+wire dataReady_n;
+assign dataReady = ~dataReady_n;
 
 // Output dataReady to PIC (so it'll enable our SPI CS#)...
-dly_signal dataReady_reg (clock, busy, dataReady);
+dly_signal dataReady_reg (clock, busy, dataReady_n);
 
 
 // Use DDR output buffer to isolate clock & avoid skew penalty...
@@ -204,6 +203,11 @@ serial #(.FREQ(FREQ), .RATE(RATE)) serial (
 
 `endif
 
+wire armLEDnn_n;
+wire triggerLEDnn_n;
+
+assign armLEDnn = ~armLEDnn_n;
+assign triggerLEDnn = ~triggerLEDnn_n;
 
 //
 // Instantiate core...
@@ -232,8 +236,8 @@ core #(.MEMORY_DEPTH(MEMORY_DEPTH)) core (
   .memoryLastWrite(lastwrite),
   .extTriggerOut(extTriggerOut),
   .extClockOut(extclock),
-  .armLEDnn(armLEDnn),
-  .triggerLEDnn(triggerLEDnn),
+  .armLEDnn(armLEDnn_n),
+  .triggerLEDnn(triggerLEDnn_n),
   .wrFlags(wrFlags),
   .extTestMode(extTestMode));
 
