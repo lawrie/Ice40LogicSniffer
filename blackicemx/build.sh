@@ -10,7 +10,7 @@ SRCS="../src/async_fifo.v ../src/BRAM4k8bit.v ../src/controller.v ../src/core.v 
 
 ./clean.sh
 
-yosys -q -f "verilog -Duse_sb_io" -l ${NAME}.log -p "synth_ice40 -top ${TOP} -abc2 -blif ${NAME}.blif" ${SRCS}
-arachne-pnr -d 8k -P ${PACKAGE} -p blackice.pcf ${NAME}.blif -o ${NAME}.txt
+yosys -q -f "verilog -Duse_sb_io" -l ${NAME}.log -p "synth_ice40 -top ${TOP} -abc2 -json ${NAME}.json" ${SRCS}
+nextpnr-ice40 --hx8k --freq 25 --package ${PACKAGE} --pcf blackice.pcf --json ${NAME}.json --asc ${NAME}.txt --placer heap
 icepack ${NAME}.txt ${NAME}.bin
 icetime -d hx8k -P ${PACKAGE} -t ${NAME}.txt

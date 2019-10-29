@@ -4,6 +4,7 @@ not_in_git/
 # IceStorm files
 sniffer.bin
 sniffer.blif
+sniffer.json
 sniffer.log
 sniffer.txt
 # Simulation files

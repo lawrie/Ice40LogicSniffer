@@ -110,7 +110,7 @@ assign {config_data,opcode} = cmd;
 
 // Instantiate PLL...
 // pll_wrapper pll_wrapper ( .clkin(bf_clock), .clk0(clock));
-reg clock = bf_clock;
+wire clock = bf_clock;
 
 wire dataReady_n;
 assign dataReady = ~dataReady_n;
