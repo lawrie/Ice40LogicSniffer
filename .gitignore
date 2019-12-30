@@ -3,10 +3,12 @@
 not_in_git/
 # IceStorm files
 sniffer.bin
+sniffer.bit
 sniffer.blif
 sniffer.json
 sniffer.log
 sniffer.txt
+sniffer.config
 # Simulation files
 dump.vcd
 a.out

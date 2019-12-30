@@ -82,10 +82,15 @@ output triggerLEDnn;
   output tx;
 `endif
 
-
+`ifdef ulx3s
+parameter FREQ = 100000000;  // limited to 100M by onboard SRAM
+`else
 parameter FREQ = 50000000;  // limited to 100M by onboard SRAM
-parameter TRXSCALE = 28;  // 100M / 28 / 115200 = 31 (5bit)  --If serial communications are not working then try adjusting this number.
+`endif
+
 `ifdef blackicemx
+parameter RATE = 115200;  // maximum & base rate
+`elsif ulx3s
 parameter RATE = 115200;  // maximum & base rate
 `else
 parameter RATE = 460800;  // maximum & base rate
@@ -118,12 +123,16 @@ assign {config_data,opcode} = cmd;
 `ifdef blackicemx
 wire clock;
 pll pll1 (.clock_in(bf_clock), .clock_out(clock));
+`elsif ulx3s
+wire clock;
+pll pll1 (.clkin(bf_clock), .clkout0(clock));
 `else
 reg clock = 1'b0;
 
 always @(posedge bf_clock)
   clock = ~clock;
 `endif
+
 
 // Output dataReady to PIC (so it'll enable our SPI CS#)...
 dly_signal dataReady_reg (clock, busy, dataReady);
